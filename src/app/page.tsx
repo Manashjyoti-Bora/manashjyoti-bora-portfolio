@@ -1,31 +1,5 @@
-import Preloader from "@/components/Preloader";
-import Navigation from "@/components/Navigation";
-import Hero from "@/components/Hero";
-import SelectedWork from "@/components/SelectedWork";
-import About from "@/components/About";
-import Capabilities from "@/components/Capabilities";
-import Experience from "@/components/Experience";
-import Testimonials from "@/components/Testimonials";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
-
-export default function HomePage() {
-  return (
-    <>
-      <Preloader />
-      <Navigation />
-      <CustomCursor />
-      <main>
-        <Hero />
-        <SelectedWork />
-        <About />
-        <Capabilities />
-        <Experience />
-        <Testimonials />
-        <Contact />
-      </main>
-      <Footer />
-    </>
-  );
-}
+'use client';
+import dynamic from 'next/dynamic'; import {useEffect,useState} from 'react'; import {AnimatePresence,motion} from 'framer-motion'; import {FiGithub,FiInstagram,FiLinkedin,FiMail,FiX} from 'react-icons/fi';
+const Studio=dynamic(()=>import('../components/Studio'),{ssr:false,loading:()=> <div className="loader">LOADING THE STUDIO<span/></div>});
+const projects=[['AUREA Portfolio','Interactive 3D portfolio featuring AI chatbot, GitHub dashboard, cinematic UI, and premium frontend animation.','Next.js · TypeScript · Three.js','https://manashjyoti-bora.vercel.app'],['NexusMart','Production-ready e-commerce platform with JWT authentication, MongoDB Atlas, role-based admin dashboard, and secure orders.','Next.js · MongoDB · JWT','https://nexusmart-dusky.vercel.app'],['DevHire Pro ATS','Advanced applicant tracking interface demonstrating complex state management and enterprise dashboard design.','React · Dashboard UX','https://github.com/Manashjyoti-Bora/devhire-pro-ats'],['TaskFlow Enterprise','Enterprise task management application with persistent CRUD architecture.','React · State architecture','https://github.com/Manashjyoti-Bora/taskflow-enterprise']];
+export default function Home(){const [open,setOpen]=useState(false);const [chapter,setChapter]=useState('01 / THE STUDIO');useEffect(()=>{let f=()=>{let p=scrollY/(document.body.scrollHeight-innerHeight);setChapter(p<.25?'01 / THE STUDIO':p<.55?'02 / THE ANDROID METHOD':p<.8?'03 / THE BUILDER\'S TIMELINE':'04 / THE SIGNAL')};addEventListener('scroll',f);f();return()=>removeEventListener('scroll',f)},[]);return <main><header><b><i/> MB / STUDIO</b><nav><a href="#journey">Journey</a><a href="#contact">Contact</a></nav><span>ASSAM · INDIA</span></header><section id="journey" className="stage"><Studio onLaptop={()=>setOpen(true)}/><div className="copy"><p className="eyebrow">INDEPENDENT DIGITAL BUILDER / 2026</p><h1>Manashjyoti<br/><em>Bora</em></h1><h2>CREATIVE FRONTEND ENGINEER · FULL STACK DEVELOPER</h2><p className="intro">Building production-quality web experiences from <strong>nothing more than an Android phone</strong>, imagination, and relentless curiosity.</p></div><p className="scrollhint"><b>SCROLL</b> TO TRAVEL THROUGH THE STUDIO</p><aside>{chapter}<i/></aside></section><section className="semantic"><h2>About Manashjyoti Bora</h2><p>I&apos;m Manashjyoti Bora, a Full Stack Developer from Assam transforming ambitious ideas into immersive digital experiences. I build professional applications entirely from Android using Termux, GitHub and Vercel.</p><h2>Skills</h2><p>HTML5, CSS3, JavaScript, TypeScript, React, Next.js, Tailwind CSS, Framer Motion, Node.js, Express, MongoDB, Git, GitHub, Vercel, Termux, Three.js and GLSL.</p><h2>Experience</h2><p>2025—Present: First-Year B.Voc Information Technology Student. 2025: Independent Full Stack Developer. 2024: Frontend Developer.</p></section><section id="contact" className="contact"><p className="eyebrow">THE SIGNAL REMAINS OPEN</p><h2>let&apos;s make<br/><em>a signal.</em></h2><div><a href="mailto:manashjyotibora@gmail.com"><FiMail/> EMAIL</a><a href="https://github.com/Manashjyoti-Bora"><FiGithub/> GITHUB</a><a href="https://www.linkedin.com/in/manashjyoti-bora"><FiLinkedin/> LINKEDIN</a><a href="https://www.instagram.com/scarrrr_09?igsh=MWN3NzV0dWlwYXM2eg=="><FiInstagram/> INSTAGRAM</a></div></section><AnimatePresence>{open&&<motion.section className="universe" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}><button onClick={()=>setOpen(false)} aria-label="Close projects"><FiX/> ESC / CLOSE</button><p className="eyebrow">THE MONITOR OPENS / SELECTED WORK</p><h2>Projects <em>emerge.</em></h2><div className="projectgrid">{projects.map((p,i)=><motion.article key={p[0]} initial={{y:50,opacity:0}} animate={{y:0,opacity:1}} transition={{delay:i*.1}}><div className={'glyph g'+i}>{['◇','▣','⌘','✣'][i]}</div><h3>{p[0]}</h3><p>{p[1]}</p><small>{p[2]}</small><a target="_blank" href={p[3]}>OPEN PROJECT ↗</a></motion.article>)}</div></motion.section>}</AnimatePresence></main>}
